@@ -21,17 +21,17 @@ import org.springframework.data.annotation.ReadOnlyProperty;
 @Data
 public class AbstractEntity {
 
-    @Id
-    @ReadOnlyProperty
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private Status status;
-    @CreatedDate
-    @Column(name = "created")
-    private Date created;
-    @LastModifiedDate
-    @Column(name = "updated")
-    private Date updated;
+	@Id
+	@ReadOnlyProperty
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private Status status;
+	@CreatedDate
+	@Column(name = "created")
+	private Date created;
+	@LastModifiedDate
+	@Column(name = "updated")
+	private Date updated;
 }

@@ -1,5 +1,5 @@
 package com.example.security.entity;
 
 public enum Status {
-    ACTIVE, NOACTIVE, DELETED
+	ACTIVE, NOACTIVE, DELETED
 }

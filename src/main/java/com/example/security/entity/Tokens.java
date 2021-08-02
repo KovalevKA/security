@@ -14,11 +14,10 @@ import lombok.NoArgsConstructor;
 @AttributeOverride(name = "id", column = @Column(name = "token_id"))
 public class Tokens extends AbstractEntity {
 
-    @Column(name = "refresh_token")
-    private String refreshToken;
-    @Column(name = "access_token")
-    private String accessToken;
-
+	@Column(name = "refresh_token")
+	private String refreshToken;
+	@Column(name = "access_token")
+	private String accessToken;
 
 
 }

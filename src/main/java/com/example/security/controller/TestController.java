@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class TestController {
 
-    @PostMapping
-    public String getTest(User user) {
-        return "OK";
-    }
+	@PostMapping
+	public String getTest(User user) {
+		return "OK";
+	}
 
 }
