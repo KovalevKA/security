@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "roles")
 public class Role extends AbstractEntity {
 
-	public static final String INDEX = "role";
+    public static final String INDEX = "role";
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
 }
