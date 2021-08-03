@@ -1,6 +1,6 @@
 package com.example.security.service;
 
-import com.example.security.dto.UserDTO;
+import com.example.security.dto.user.UserDTO;
 import com.example.security.entity.User;
 
 public interface UserService

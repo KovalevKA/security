@@ -1,6 +1,6 @@
 package com.example.security.service.impl;
 
-import com.example.security.dto.UserDTO;
+import com.example.security.dto.user.UserDTO;
 import com.example.security.entity.User;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.UserRepository;

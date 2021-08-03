@@ -1,6 +1,6 @@
 package com.example.security.mapper;
 
-import com.example.security.dto.UserDTO;
+import com.example.security.dto.user.UserDTO;
 import com.example.security.entity.User;
 import org.springframework.stereotype.Component;
 
