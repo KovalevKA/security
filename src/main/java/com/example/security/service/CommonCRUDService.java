@@ -5,7 +5,7 @@ import com.example.security.entity.AbstractEntity;
 
 import java.util.List;
 
-public interface AbstractCRUDService<Entity extends AbstractEntity, DTO extends AbstractDTO> {
+public interface CommonCRUDService<Entity extends AbstractEntity, DTO extends AbstractDTO> {
 
     List<Entity> getAll();
 

@@ -1,6 +1,7 @@
 package com.example.security.service.impl;
 
 import com.example.security.dto.TokenDTO;
+import com.example.security.dto.user.UserDTO;
 import com.example.security.entity.Tokens;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.TokenRepository;
@@ -10,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TokenServiceImpl
-    extends AbstractCRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
+    extends
+    CommonCRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
     implements TokenService {
 
     private final TokenRepository tokenRepository;
@@ -30,5 +32,8 @@ public class TokenServiceImpl
         return tokenRepository.findByRefreshToken(refreshToken);
     }
 
-
+    @Override
+    public Tokens refreshTokens(UserDTO userDTO) {
+        return null;
+    }
 }

@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl
-    extends AbstractCRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
+    extends CommonCRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
     implements UserService {
 
     @Autowired
