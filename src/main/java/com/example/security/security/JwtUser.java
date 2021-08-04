@@ -1,14 +1,14 @@
 package com.example.security.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.time.OffsetDateTime;
-import java.util.Collection;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Date;
 
 @AllArgsConstructor
 @Getter

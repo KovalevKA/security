@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TokenServiceImpl
-    extends
-    CommonCRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
-    implements TokenService {
+        extends
+        CommonCRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
+        implements TokenService {
 
     private final TokenRepository tokenRepository;
 

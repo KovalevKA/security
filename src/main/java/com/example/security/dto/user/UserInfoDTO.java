@@ -3,10 +3,11 @@ package com.example.security.dto.user;
 import com.example.security.dto.AbstractDTO;
 import com.example.security.dto.RoleDTO;
 import com.example.security.dto.TokenDTO;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor

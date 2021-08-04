@@ -1,9 +1,10 @@
 package com.example.security.dto;
 
 import com.example.security.entity.Status;
-import java.util.Date;
-import javax.persistence.MappedSuperclass;
 import lombok.Data;
+
+import javax.persistence.MappedSuperclass;
+import java.util.Date;
 
 @Data
 @MappedSuperclass

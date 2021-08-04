@@ -4,10 +4,11 @@ import com.example.security.dto.user.UserDTO;
 import com.example.security.dto.user.UserInfoDTO;
 import com.example.security.dto.user.UserLoginDTO;
 import com.example.security.entity.User;
+
 import java.util.Map;
 
 public interface UserService
-    extends CommonCRUDService<User, UserDTO> {
+        extends CommonCRUDService<User, UserDTO> {
 
     User getByName(String username);
 

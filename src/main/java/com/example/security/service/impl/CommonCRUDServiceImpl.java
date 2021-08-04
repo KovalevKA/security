@@ -4,17 +4,18 @@ import com.example.security.dto.AbstractDTO;
 import com.example.security.entity.AbstractEntity;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.service.CommonCRUDService;
-import java.lang.reflect.Field;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.lang.reflect.Field;
+import java.util.List;
+
 public class CommonCRUDServiceImpl<
-    Entity extends AbstractEntity,
-    DTO extends AbstractDTO,
-    Repository extends JpaRepository<Entity, Long>,
-    Mapper extends AbstractMapper<Entity, DTO>>
-    implements CommonCRUDService<Entity, DTO> {
+        Entity extends AbstractEntity,
+        DTO extends AbstractDTO,
+        Repository extends JpaRepository<Entity, Long>,
+        Mapper extends AbstractMapper<Entity, DTO>>
+        implements CommonCRUDService<Entity, DTO> {
 
     @Autowired
     private Repository repository;

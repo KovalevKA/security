@@ -14,41 +14,27 @@ import com.example.security.security.JwtTokenProvider;
 import com.example.security.service.RoleService;
 import com.example.security.service.TokenService;
 import com.example.security.service.UserService;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.persistence.EntityExistsException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import java.util.*;
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl
-    extends CommonCRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
-    implements UserService {
+        extends CommonCRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
+        implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
     private final RoleService roleService;
     private final TokenService tokenService;
-
-    @Autowired
-    public UserServiceImpl(JwtTokenProvider jwtTokenProvider,
-        UserRepository userRepository, RoleService roleService,
-        TokenService tokenService) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userRepository = userRepository;
-        this.roleService = roleService;
-        this.tokenService = tokenService;
-    }
+    private final UserRepository userRepository;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User getByName(String username) {
@@ -63,7 +49,7 @@ public class UserServiceImpl
         ModelMapper mapper = new ModelMapper();
 
         UserDTO userDTO = new UserDTO(dto.getUsername(),
-            bCryptPasswordEncoder.encode(dto.getPassword()));
+                bCryptPasswordEncoder.encode(dto.getPassword()));
 
         Role role = roleService.getByName("ROLE_USER");
         List<RoleDTO> roleDTOs = new ArrayList<>();
@@ -71,8 +57,8 @@ public class UserServiceImpl
         userDTO.setRoles(roleDTOs);
 
         TokenDTO tokenDTO = mapper
-            .map(jwtTokenProvider.createPairToken(dto.getUsername(), Arrays.asList(role)),
-                TokenDTO.class);
+                .map(jwtTokenProvider.createPairToken(dto.getUsername(), Arrays.asList(role)),
+                        TokenDTO.class);
         userDTO.setToken(tokenDTO);
 
         return mapper.map(create(userDTO), UserInfoDTO.class);
