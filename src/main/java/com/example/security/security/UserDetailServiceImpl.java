@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+/**
+ * TODO: try to remove this class
+ * */
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 

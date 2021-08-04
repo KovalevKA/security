@@ -13,6 +13,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
+/**
+ * TODO: try to remove this class
+ * */
 @Component
 public class JwtTokenProvider {
 
@@ -97,7 +100,9 @@ public class JwtTokenProvider {
         }
         return Optional.empty();
     }
-
+/**
+ * TODO:edit logic to research tokens
+ * */
     public Boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
