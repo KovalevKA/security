@@ -8,7 +8,7 @@ import com.example.security.entity.User;
 import java.util.Map;
 
 public interface UserService
-        extends CommonCRUDService<User, UserDTO> {
+        extends CRUDService<User, UserDTO> {
 
     User getByName(String username);
 

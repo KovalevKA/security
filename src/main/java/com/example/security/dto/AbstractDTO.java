@@ -10,7 +10,7 @@ import java.util.Date;
 @MappedSuperclass
 public class AbstractDTO {
 
-    private String id;
+    private Long id;
     private Status status = Status.ACTIVE;
     private Date created;
     private Date updated;

@@ -90,12 +90,12 @@ public class JwtTokenProvider {
                 ;
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public Optional<String> resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(header);
         if (bearerToken != null && bearerToken.startsWith(prefix)) {
-            return bearerToken.substring(7, bearerToken.length());
+            return Optional.of(bearerToken.substring(7, bearerToken.length()));
         }
-        return null;
+        return Optional.empty();
     }
 
     public Boolean validateToken(String token) {

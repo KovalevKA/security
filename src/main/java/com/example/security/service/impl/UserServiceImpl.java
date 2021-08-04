@@ -27,7 +27,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl
-        extends CommonCRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
+        extends CRUDServiceImpl<User, UserDTO, UserRepository, AbstractMapper<User, UserDTO>>
         implements UserService {
 
     private final RoleService roleService;
@@ -73,6 +73,7 @@ public class UserServiceImpl
         if (!bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new CredentialsExpiredException("Credential is wrong");
         }
+        tokenService.refreshTokens(user);
         Map<String, String> result = new HashMap<>();
         result.put("accessToken", user.getToken().getAccessToken());
         result.put("refreshToken", user.getToken().getRefreshToken());

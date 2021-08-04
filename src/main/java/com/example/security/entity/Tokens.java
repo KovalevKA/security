@@ -3,10 +3,7 @@ package com.example.security.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -19,7 +16,6 @@ public class Tokens extends AbstractEntity {
 	private String refreshToken;
 	@Column(name = "access_token")
 	private String accessToken;
-
 
 }
 

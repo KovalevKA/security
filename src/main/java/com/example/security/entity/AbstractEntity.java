@@ -26,10 +26,10 @@ public class AbstractEntity {
     @Column(name = "status")
     private Status status;
     @CreatedDate
-    @Column(name = "created", nullable = false)
+    @Column(name = "created")
     private Date created;
     @LastModifiedDate
-    @Column(name = "updated", nullable = false)
+    @Column(name = "updated")
     private Date updated;
 
 }

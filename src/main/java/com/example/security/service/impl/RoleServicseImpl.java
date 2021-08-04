@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RoleServicseImpl
-        extends CommonCRUDServiceImpl<Role, RoleDTO, RoleRepository, AbstractMapper<Role, RoleDTO>>
+        extends CRUDServiceImpl<Role, RoleDTO, RoleRepository, AbstractMapper<Role, RoleDTO>>
         implements RoleService {
 
     private final RoleRepository roleRepository;

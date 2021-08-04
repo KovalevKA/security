@@ -3,19 +3,19 @@ package com.example.security.service.impl;
 import com.example.security.dto.AbstractDTO;
 import com.example.security.entity.AbstractEntity;
 import com.example.security.mapper.AbstractMapper;
-import com.example.security.service.CommonCRUDService;
+import com.example.security.service.CRUDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-public class CommonCRUDServiceImpl<
+public class CRUDServiceImpl<
         Entity extends AbstractEntity,
         DTO extends AbstractDTO,
         Repository extends JpaRepository<Entity, Long>,
         Mapper extends AbstractMapper<Entity, DTO>>
-        implements CommonCRUDService<Entity, DTO> {
+        implements CRUDService<Entity, DTO> {
 
     @Autowired
     private Repository repository;
@@ -37,10 +37,13 @@ public class CommonCRUDServiceImpl<
         Entity entity = mapper.toEntity(dto);
         return repository.saveAndFlush(entity);
     }
-
+/**
+ *TODO:$$_hibernate-interceptor
+ * what & how
+ * */
     @Override
     public Entity update(Long id, DTO dto) {
-        Entity saveEntity = repository.findById(id).get();
+        Entity saveEntity = repository.getById(id);
 
         for (Field field : dto.getClass().getDeclaredFields()) {
             field.setAccessible(true);

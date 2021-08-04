@@ -26,8 +26,8 @@ public class RegistrationController {
     }
 
     @PostMapping("logout")
-    public void logout(@RequestHeader("Authorization") String header) {
-        userService.logout(header);
+    public void logout() {
+        userService.logout("header");
     }
 
 }

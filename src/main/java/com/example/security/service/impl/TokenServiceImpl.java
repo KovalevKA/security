@@ -1,26 +1,27 @@
 package com.example.security.service.impl;
 
 import com.example.security.dto.TokenDTO;
-import com.example.security.dto.user.UserDTO;
 import com.example.security.entity.Tokens;
+import com.example.security.entity.User;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.TokenRepository;
+import com.example.security.security.JwtTokenProvider;
 import com.example.security.service.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TokenServiceImpl
         extends
-        CommonCRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
+        CRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
         implements TokenService {
 
-    private final TokenRepository tokenRepository;
+    ModelMapper mapper = new ModelMapper();
 
-    @Autowired
-    public TokenServiceImpl(TokenRepository tokenRepository) {
-        this.tokenRepository = tokenRepository;
-    }
+    private final TokenRepository tokenRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Tokens getByAccessToken(String accesToken) {
@@ -31,9 +32,13 @@ public class TokenServiceImpl
     public Tokens getByRefreshToken(String refreshToken) {
         return tokenRepository.findByRefreshToken(refreshToken);
     }
-
+/**
+ * TODO:can skip right now. it works if do it without respect.
+ * */
     @Override
-    public Tokens refreshTokens(UserDTO userDTO) {
-        return null;
+    public Tokens refreshTokens(User user) {
+        TokenDTO tokenDTO = mapper
+                .map(jwtTokenProvider.createPairToken(user.getUsername(), user.getRoles()), TokenDTO.class);
+        return update(user.getToken().getId(), tokenDTO);
     }
 }
