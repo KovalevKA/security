@@ -22,7 +22,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		super.configure(http);
+		http
+			.cors().disable()
+			.csrf().disable()
+			.authorizeRequests()
+			.antMatchers("/public/**").permitAll()
+			.antMatchers("/private/**").hasRole("ADMIN")
+			.anyRequest().authenticated()
+			.and()
+			.httpBasic()
+		;
 	}
 
 	@Bean
