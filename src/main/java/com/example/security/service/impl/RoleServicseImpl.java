@@ -8,6 +8,8 @@ import com.example.security.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+
 @Service
 public class RoleServicseImpl
         extends CRUDServiceImpl<Role, RoleDTO, RoleRepository, AbstractMapper<Role, RoleDTO>>
@@ -16,7 +18,8 @@ public class RoleServicseImpl
     private final RoleRepository roleRepository;
 
     @Autowired
-    public RoleServicseImpl(RoleRepository roleRepository) {
+    public RoleServicseImpl(EntityManager entityManager, RoleRepository roleRepository) {
+        super(entityManager);
         this.roleRepository = roleRepository;
     }
 

@@ -7,12 +7,13 @@ import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.TokenRepository;
 import com.example.security.security.JwtTokenProvider;
 import com.example.security.service.TokenService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+
 @Service
-@RequiredArgsConstructor
 public class TokenServiceImpl
         extends
         CRUDServiceImpl<Tokens, TokenDTO, TokenRepository, AbstractMapper<Tokens, TokenDTO>>
@@ -23,22 +24,29 @@ public class TokenServiceImpl
     private final TokenRepository tokenRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    @Autowired
+    public TokenServiceImpl(EntityManager entityManager,
+                            TokenRepository tokenRepository,
+                            JwtTokenProvider jwtTokenProvider) {
+        super(entityManager);
+        this.tokenRepository = tokenRepository;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
     @Override
-    public Tokens getByAccessToken(String accesToken) {
-        return tokenRepository.findByAccessToken(accesToken);
+    public Tokens getByAccessToken(String accessToken) {
+        return tokenRepository.findByAccessToken(accessToken);
     }
 
     @Override
     public Tokens getByRefreshToken(String refreshToken) {
         return tokenRepository.findByRefreshToken(refreshToken);
     }
-/**
- * TODO:can skip right now. it works if do it without respect.
- * */
+
     @Override
     public Tokens refreshTokens(User user) {
         TokenDTO tokenDTO = mapper
                 .map(jwtTokenProvider.createPairToken(user.getUsername(), user.getRoles()), TokenDTO.class);
-        return update(user.getToken().getId(), tokenDTO);
+        return create(tokenDTO);
     }
 }

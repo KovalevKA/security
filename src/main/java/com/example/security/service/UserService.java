@@ -10,7 +10,7 @@ import java.util.Map;
 public interface UserService
         extends CRUDService<User, UserDTO> {
 
-    User getByName(String username);
+    User findByUsername(String username);
 
     UserInfoDTO registration(UserLoginDTO dto);
 

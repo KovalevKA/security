@@ -37,7 +37,8 @@ public class ControllerExceptions {
             EntityExistsException.class,
             BadCredentialsException.class,
             CredentialsExpiredException.class,
-            UsernameNotFoundException.class
+            UsernameNotFoundException.class,
+            NullPointerException.class
     })
     public String exceptionHandler(Exception e) {
         return e.getMessage() != null ? e.getMessage() : e.getLocalizedMessage();
