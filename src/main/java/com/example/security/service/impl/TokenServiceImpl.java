@@ -5,7 +5,7 @@ import com.example.security.entity.Tokens;
 import com.example.security.entity.User;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.TokenRepository;
-import com.example.security.security.JwtTokenProvider;
+import com.example.security.security.JwtTokenConstruct;
 import com.example.security.service.TokenService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +22,15 @@ public class TokenServiceImpl
     ModelMapper mapper = new ModelMapper();
 
     private final TokenRepository tokenRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenConstruct jwtTokenConstruct;
 
     @Autowired
     public TokenServiceImpl(EntityManager entityManager,
                             TokenRepository tokenRepository,
-                            JwtTokenProvider jwtTokenProvider) {
+                            JwtTokenConstruct jwtTokenConstruct) {
         super(entityManager);
         this.tokenRepository = tokenRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenConstruct = jwtTokenConstruct;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TokenServiceImpl
     @Override
     public Tokens refreshTokens(User user) {
         TokenDTO tokenDTO = mapper
-                .map(jwtTokenProvider.createPairToken(user.getUsername(), user.getRoles()), TokenDTO.class);
+                .map(jwtTokenConstruct.createPairToken(user.getUsername(), user.getRoles()), TokenDTO.class);
         return create(tokenDTO);
     }
 }

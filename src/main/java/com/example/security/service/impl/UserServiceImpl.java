@@ -9,19 +9,23 @@ import com.example.security.entity.Role;
 import com.example.security.entity.User;
 import com.example.security.mapper.AbstractMapper;
 import com.example.security.repository.UserRepository;
-import com.example.security.security.JwtTokenProvider;
+import com.example.security.security.JwtTokenConstruct;
+import com.example.security.security.JwtUser;
+import com.example.security.security.JwtUserFactory;
 import com.example.security.service.RoleService;
 import com.example.security.service.TokenService;
 import com.example.security.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Service
@@ -32,7 +36,7 @@ public class UserServiceImpl
     private final RoleService roleService;
     private final TokenService tokenService;
     private final UserRepository userRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenConstruct jwtTokenConstruct;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -40,14 +44,27 @@ public class UserServiceImpl
                            RoleService roleService,
                            TokenService tokenService,
                            UserRepository userRepository,
-                           JwtTokenProvider jwtTokenProvider,
+                           JwtTokenConstruct jwtTokenConstruct,
                            BCryptPasswordEncoder bCryptPasswordEncoder) {
         super(entityManager);
         this.roleService = roleService;
         this.tokenService = tokenService;
         this.userRepository = userRepository;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenConstruct = jwtTokenConstruct;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User with username " + username + " not found");
+        }
+
+        JwtUser jwtUser = JwtUserFactory.create(user);
+
+        return jwtUser;
     }
 
     public User findByUsername(String username) {
@@ -68,10 +85,8 @@ public class UserServiceImpl
         List<RoleDTO> roleDTOs = new ArrayList<>();
         roleDTOs.add(mapper.map(role, RoleDTO.class));
         userDTO.setRoles(roleDTOs);
-
         TokenDTO tokenDTO = mapper
-                .map(jwtTokenProvider.createPairToken(dto.getUsername(), Arrays.asList(role)),
-                        TokenDTO.class);
+                .map(jwtTokenConstruct.createPairToken(dto.getUsername(), Arrays.asList(role)), TokenDTO.class);
         userDTO.setToken(tokenDTO);
 
         return mapper.map(create(userDTO), UserInfoDTO.class);
