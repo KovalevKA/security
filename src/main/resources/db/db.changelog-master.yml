@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      # schema
+      file: db/changelog/init.sql
+  - include:
+      # data
+      file: db/changelog/add.sql
