@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
+/**
+ * it's for generate pair tokens.
+ * Use SignatureAlgorithm.HS256 for encode
+ */
 @Component
 public class JwtTokenConstruct {
 
@@ -25,6 +29,12 @@ public class JwtTokenConstruct {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
+    /**
+     * Generate Access token
+     *
+     * @param username username for whom generate token
+     * @param roles    must be one role at least
+     */
     public String createAccessToken(String username, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
@@ -39,6 +49,12 @@ public class JwtTokenConstruct {
                 ;
     }
 
+    /**
+     * Generate Refresh token
+     *
+     * @param username username for whom generate token
+     * @param roles    must be one role at least
+     */
     public String createRefreshToken(String username, List<Role> roles) {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
@@ -53,6 +69,12 @@ public class JwtTokenConstruct {
                 ;
     }
 
+    /**
+     * Generate Access & Refresh tokens
+     *
+     * @param username username for whom generate token
+     * @param roles    must be one role at least
+     */
     public Map<Object, Object> createPairToken(String username, List<Role> roles) {
         Map<Object, Object> result = new HashMap<>();
         result.put("accessToken", createAccessToken(username, roles));
@@ -60,7 +82,13 @@ public class JwtTokenConstruct {
         return result;
     }
 
-    public List<String> getRoleNames(List<Role> userRoles) {
+    /**
+     * get names of roles
+     *
+     * @param userRoles
+     * @return string names roles
+     */
+    private List<String> getRoleNames(List<Role> userRoles) {
         List<String> result = new ArrayList<>();
         userRoles.forEach(role -> result.add(role.getName()));
         return result;

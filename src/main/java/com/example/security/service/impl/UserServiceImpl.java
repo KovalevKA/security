@@ -57,16 +57,14 @@ public class UserServiceImpl
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-
         if (user == null) {
             throw new EntityNotFoundException("User with username " + username + " not found");
         }
-
         JwtUser jwtUser = JwtUserFactory.create(user);
-
         return jwtUser;
     }
 
+    @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

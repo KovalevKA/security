@@ -19,6 +19,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
+/**
+ * For create autherization & validate token
+ */
 @Component
 public class JwtTokenProvider {
 
@@ -44,13 +47,18 @@ public class JwtTokenProvider {
         secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 
+    /**
+     * create UsernamePasswordAuthenticationToken by token
+     *
+     * @param token which is indicated in request header
+     */
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userService.loadUserByUsername(getUserName(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "",
                 userDetails.getAuthorities());
     }
 
-    public String getUserName(String token) {
+    private String getUserName(String token) {
         return Jwts
                 .parser()
                 .setSigningKey(secret)
@@ -67,9 +75,16 @@ public class JwtTokenProvider {
         }
         return Optional.empty();
     }
-/**
- * TODO:edit logic to research tokens
- * */
+
+    /**
+     * TODO:edit logic to research tokens
+     */
+    /**
+     * Validation token in system.
+     * chek expiration & issued at dates
+     *
+     * @param token which is indicated in request header
+     */
     public Boolean validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
@@ -85,7 +100,6 @@ public class JwtTokenProvider {
             throw new IllegalArgumentException("Token not valid");
         }
     }
-
 
 
 }
