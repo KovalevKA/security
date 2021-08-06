@@ -1,6 +1,5 @@
 package com.example.security.config;
 
-import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,10 +8,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -55,18 +55,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		;
 	}
 
-	/*@Bean
-	@Override
-	public UserDetailsService userDetailsServiceBean() throws Exception {
-		return new InMemoryUserDetailsManager(
-			User.builder()
-				.username("admin").password(passwordEncoder().encode("admin"))
-				.roles("ADMIN")
-				.build(),
-			User.builder()
-				.username("user").password(passwordEncoder().encode("user"))
-				.roles("USER")
-				.build()
-		);
-	}*/
 }
