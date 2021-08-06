@@ -5,6 +5,7 @@ import com.example.security.dto.TokenDTO;
 import com.example.security.dto.user.UserDTO;
 import com.example.security.dto.user.UserInfoDTO;
 import com.example.security.dto.user.UserLoginDTO;
+import com.example.security.entity.DefaultRoles;
 import com.example.security.entity.Role;
 import com.example.security.entity.User;
 import com.example.security.mapper.AbstractMapper;
@@ -79,7 +80,7 @@ public class UserServiceImpl
         UserDTO userDTO = new UserDTO(dto.getUsername(),
                 bCryptPasswordEncoder.encode(dto.getPassword()));
 
-        Role role = roleService.getByName("ROLE_USER");
+        Role role = roleService.getByName(DefaultRoles.GUEST.getCode());
         List<RoleDTO> roleDTOs = new ArrayList<>();
         roleDTOs.add(mapper.map(role, RoleDTO.class));
         userDTO.setRoles(roleDTOs);
