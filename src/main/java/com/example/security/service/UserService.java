@@ -19,4 +19,6 @@ public interface UserService
 
     void logout(String header);
 
+    UserInfoDTO getUserInfo(String header);
+
 }

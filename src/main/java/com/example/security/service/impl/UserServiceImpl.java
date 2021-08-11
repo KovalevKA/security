@@ -71,6 +71,19 @@ public class UserServiceImpl
     }
 
     @Override
+    public UserInfoDTO getUserInfo(String header) {
+
+        ModelMapper mapper = new ModelMapper();
+
+        return mapper.map(
+                userRepository.findByTokenId(
+                        tokenService.getByAccessToken(
+                                header.substring(7)
+                        ).getId()
+                ), UserInfoDTO.class);
+    }
+
+    @Override
     public UserInfoDTO registration(UserLoginDTO dto) {
         if (findByUsername(dto.getUsername()) != null) {
             throw new EntityExistsException("Can't create user. Usermane exist");
